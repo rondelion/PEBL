@@ -1,0 +1,91 @@
+###########################################################################
+## Delayed Match to Sample Test
+##   Show a sample sigure for a while
+##   Pause
+##   Show a pair of figures, one of which matches to the sample
+##   Wait for arrow key response (Left or Right)
+###########################################################################
+define Start(p)
+{
+   gWin <- MakeWindow("white")
+   gColors <-  ["LB"]
+   gShapes <-  ["Barred_Ring","Triangle","Crescent","Cross","Circle","Heart","Pentagon","Ring","Square"]
+   gButton1 <- MakeImage("png/Button_Green.png")
+   gButton1F <- MakeImage("png/Button_LG.png")
+   gButton2 <- MakeImage("png/Button_Red.png")
+   gButton2F <- MakeImage("png/Button_Pink.png")
+
+   color <- Nth(gColors,RandomDiscrete(Length(gColors)))
+   shape <- Nth(gShapes,RandomDiscrete(Length(gShapes)))
+   sample <- MakeImage("png/"+shape+"_"+color+".png")
+   AddObject(sample,gWin)
+   # Move(sample, gVideoWidth/2 - 450 +28 + 125/2, 105)
+   Move(sample, gVideoWidth/2, 105)
+   Draw()
+   Wait(2000)
+   RemoveObject(sample,gWin)
+   Draw()
+   Wait(2000)
+   lr <- RandomDiscrete(2)  # Left:1 & Right:2
+   Print(lr)
+   if (lr==1) {
+      target1 <- sample
+      target2 <- GetAnother(color,shape)
+   } else {
+      target1 <- GetAnother(color,shape)
+      target2 <- sample
+   }
+   AddObject(target1,gWin)
+   Move(target1, gVideoWidth/2 - 160, 410)
+   AddObject(target2,gWin)
+   Move(target2, gVideoWidth/2 + 160, 410)
+   AddObject(gButton1,gWin)
+   Move(gButton1, gVideoWidth/2 - 160, 610)
+   AddObject(gButton2,gWin)
+   Move(gButton2, gVideoWidth/2 + 160, 610)
+   Draw()
+   response <- WaitForAnyKeyPressWithTimeOut(5000)
+   correct <- 0
+   if ((response=="<left>" and lr==1) or (response=="<right>" and lr==2)) {
+      correct <- 1
+   }
+   ButtonFlashes(response)
+   Print("Response:"+response)
+   Print("Correct:"+correct)
+   Wait(1000)
+}
+
+define GetAnother(cl,sp)
+{
+   color <- Nth(gColors,RandomDiscrete(Length(gColors)))
+   shape <- Nth(gShapes,RandomDiscrete(Length(gShapes)))
+   while (cl==color and sp==shape) {
+      color <- Nth(gColors,RandomDiscrete(Length(gColors)))
+      shape <- Nth(gShapes,RandomDiscrete(Length(gShapes)))
+   }
+   return MakeImage("png/"+shape+"_"+color+".png")
+}
+
+define ButtonFlashes(response)
+{
+   if (response=="<left>") {
+      RemoveObject(gButton1,gWin)
+      AddObject(gButton1F,gWin)
+      Move(gButton1F, gVideoWidth/2 - 160, 610)
+      Draw()
+      Wait(400)
+      RemoveObject(gButton1F,gWin)
+      AddObject(gButton1,gWin)
+      Move(gButton1, gVideoWidth/2 - 160, 610)
+   } else {
+      RemoveObject(gButton2,gWin)
+      AddObject(gButton2F,gWin)
+      Move(gButton2F, gVideoWidth/2 + 160, 610)
+      Draw()
+      Wait(400)
+      RemoveObject(gButton2F,gWin)
+      AddObject(gButton2,gWin)
+      Move(gButton2, gVideoWidth/2 + 160, 610)
+   }
+   Draw()
+ }

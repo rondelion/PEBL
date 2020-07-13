@@ -1,0 +1,106 @@
+Basedir:/Applications/PEBL2.app/Contents/Resources
+launch: /Applications/PEBL2.app/Contents/Resources/launcher.pbl
+Working directory: /Users/rondelion/Documents/pebl-exp.2.1/battery/DM2S
+PATH:--------------------------------------
+Path List:
+./
+
+/Applications/PEBL2.app/Contents/Resources/media/fonts/
+/Applications/PEBL2.app/Contents/Resources/media/sounds/
+/Applications/PEBL2.app/Contents/Resources/media/images/
+/Applications/PEBL2.app/Contents/Resources/media/text/
+/Applications/PEBL2.app/Contents/Resources/pebl-lib/
+--------------------------------------
+Loading filename:[DM2S.pbl]
+Processing PEBL Source File1: ./DM2S.pbl
+File [./DM2S.pbl] opened successfully.
+********************
+Loading file name: [Design.pbl]
+Resolved as: [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Design.pbl]
+Processing PEBL Source File2: /Applications/PEBL2.app/Contents/Resources/pebl-lib/Design.pbl
+File [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Design.pbl] opened successfully.
+********************
+Loading file name: [Utility.pbl]
+Resolved as: [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Utility.pbl]
+Processing PEBL Source File2: /Applications/PEBL2.app/Contents/Resources/pebl-lib/Utility.pbl
+File [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Utility.pbl] opened successfully.
+********************
+Loading file name: [Math.pbl]
+Resolved as: [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Math.pbl]
+Processing PEBL Source File2: /Applications/PEBL2.app/Contents/Resources/pebl-lib/Math.pbl
+File [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Math.pbl] opened successfully.
+********************
+Loading file name: [Graphics.pbl]
+Resolved as: [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Graphics.pbl]
+Processing PEBL Source File2: /Applications/PEBL2.app/Contents/Resources/pebl-lib/Graphics.pbl
+File [/Applications/PEBL2.app/Contents/Resources/pebl-lib/Graphics.pbl] opened successfully.
+********************
+Loading file name: [UI.pbl]
+Resolved as: [/Applications/PEBL2.app/Contents/Resources/pebl-lib/UI.pbl]
+Processing PEBL Source File2: /Applications/PEBL2.app/Contents/Resources/pebl-lib/UI.pbl
+File [/Applications/PEBL2.app/Contents/Resources/pebl-lib/UI.pbl] opened successfully.
+---------Loading Program---------
+Error in function 'DIST'.  Function already exists.
+Error in function 'DRAWOBJECT'.  Function already exists.
+Analyzing code for functions.
+Loading Library functions.
+Priority set here**************************
+Process running at a nice value of 0
+attempting to set priority to: -20
+Process running at a nice value of 0
+SDL INITIALIZED
+Environment created
+---------Creating Evaluator-----
+No command line arguments given
+2020-07-09 14:42:59.080 PEBL2[3445:179890] INFO: Display #0: current display mode is 1920x1080px @ 60hz. 
+Size from command line argument: 1920|1080
+---------Evaluating Program-----
+=================================================
+    Available drivers
+=================================================
+Render driver count: 4
+ the renderer uses hardware acceleration
+ present is synchronized with the refresh rate
+ the renderer supports rendering to texture
+ the renderer uses hardware acceleration
+ present is synchronized with the refresh rate
+ the renderer supports rendering to texture
+ the renderer uses hardware acceleration
+ present is synchronized with the refresh rate
+ the renderer supports rendering to texture
+ the renderer is a software fallback
+ the renderer supports rendering to texture
+=================================================
+
+
+--------------------------------------------------------------------------------
+ Application settings:
+Script name:                               [./DM2S.pbl]
+Thu Jul  9 14:42:59 2020
+--------------------------------------------------------------------------------
+Display Mode:  Width  (pixels)                    [1920]
+Display Mode:  Height (pixels)                    [1080]
+Display Mode:  Color Depth (bits)                 [32]
+vsync mode:                                       [0]
+Software renderer mode:                           [0]
+Windowed:                                         [1]
+Resizeable:                                       [0]
+Driver hint (gDriverHint):                        [none]
+Base font (gPEBLBaseFont):                        [DejaVuSans.ttf]
+Base Mono font (gPEBLBaseFontMono):               [DejaVuSansMono.ttf]
+Base serif (gPEBLBaseFontSerif):                  [DejaVuSerif.ttf]
+Language (gLanguage):                             [EN]
+Parameter file (gParamFile):                      [params/default]
+Busy/Easy wait: (gSleepEasy):                     [1]
+Executable name: (gExecutableName):               [/Applications/PEBL2.app/Contents/MacOS/PEBL2]
+Resource path: (gPEBLResourcePath):               [/Applications/PEBL2.app/Contents/Resources]
+Resource path: (gPEBLBasePath):                   [/Applications/PEBL2.app/Contents/Resources]
+Working directory: (gWorkingDirectory):           [/Users/rondelion/Documents/pebl-exp.2.1/battery/DM2S]
+Renderer information:
+Driver name:                                      [opengl]
+Software fallback:                                [no]
+Hardware acceleration:                            [yes]
+Vsync with refresh rate:                          [no]
+Rendering to texture support                      [yes]
+--------------------------------------------------------------------------------
+
