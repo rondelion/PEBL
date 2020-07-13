@@ -14,6 +14,7 @@ define Start(p)
    gButton1F <- MakeImage("png/Button_LG.png")
    gButton2 <- MakeImage("png/Button_Red.png")
    gButton2F <- MakeImage("png/Button_Pink.png")
+   gCorrectFB <- Rectangle(gVideoWidth/2 - 450 +28 + 125/2,800,gVideoWidth,50,MakeColor("yellow"),1)
 
    color <- Nth(gColors,RandomDiscrete(Length(gColors)))
    shape <- Nth(gShapes,RandomDiscrete(Length(gShapes)))
@@ -45,14 +46,19 @@ define Start(p)
    Move(gButton2, gVideoWidth/2 + 160, 610)
    Draw()
    response <- WaitForAnyKeyPressWithTimeOut(5000)
+   ButtonFlashes(response)
+   Print("Response:"+response)
+   Wait(1000)
    correct <- 0
    if ((response=="<left>" and lr==1) or (response=="<right>" and lr==2)) {
       correct <- 1
    }
-   ButtonFlashes(response)
-   Print("Response:"+response)
    Print("Correct:"+correct)
-   Wait(1000)
+   if (correct==1) {
+      AddObject(gCorrectFB,gWin)
+      Draw()
+      Wait(1000)
+   }
 }
 
 define GetAnother(cl,sp)
