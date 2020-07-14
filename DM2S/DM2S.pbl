@@ -1,13 +1,20 @@
-###########################################################################
+#########################################################################################
 ## Delayed Match to Sample Test
-##   Show a sample sigure for a while
-##   Pause
-##   Show a pair of figures, one of which matches to the sample
-##   Wait for arrow key response (Left or Right)
-###########################################################################
+##   In Observation phase + Actual trial phase:
+##      Show a sample figure for a while
+##      Pause
+##      Show a pair of figures, one of which matches to the sample
+##      Wait for arrow key response (Left or Right) [automatic in the observation phase]
+## Created by the Whole Brain Architecture Initiative and Riken
+## under Apache 2.0 License (2020 Riken) 
+#########################################################################################
 define Start(p)
 {
-   gParams <- CreateParameters([["mainTaskRepeat",3]],gParamFile)
+   paramPairs <- [["mainTaskRepeat",3],
+                  ["observationRepeat",2]]
+   gParams <- CreateParameters(paramPairs,gParamFile)
+   gVideoWidth <- 800
+   gVideoHeight <- 800
    gWin <- MakeWindow("white")
    gColors <-  ["LB"]
    gShapes <-  ["Barred_Ring","Triangle","Crescent","Cross","Circle","Heart","Pentagon","Ring","Square"]
@@ -15,26 +22,40 @@ define Start(p)
    gButton1F <- MakeImage("png/Button_LG.png")
    gButton2 <- MakeImage("png/Button_Red.png")
    gButton2F <- MakeImage("png/Button_Pink.png")
-   gCorrectFB <- Rectangle(gVideoWidth/2,800,gVideoWidth,50,MakeColor("yellow"),1)
-   AddObject(gButton1,gWin)
-   Move(gButton1, gVideoWidth/2 - 160, 610)
-   AddObject(gButton2,gWin)
-   Move(gButton2, gVideoWidth/2 + 160, 610)
+   gCorrectFB <- Rectangle(gVideoWidth/2,gVideoHeight-25,gVideoWidth,50,MakeColor("yellow"),1)
+   gObservBar <- Rectangle(gVideoWidth/2,25,gVideoWidth,50,MakeColor("blue"),1)
+   gBlackMask <- Rectangle(gVideoWidth/2,gVideoHeight/2,gVideoWidth,gVideoHeight,MakeColor("black"),1)
+   gWhiteMask <- Rectangle(gVideoWidth/2,gVideoHeight/2,gVideoWidth,gVideoHeight,MakeColor("white"),1)
+   AddButtons()
+   AddObject(gObservBar,gWin)
+   i <- 1
+   while(i <= gParams.observationRepeat) {
+      MainTask(1)
+      i <- i + 1
+   }
+   EndObservation()
    i <- 1
    while(i <= gParams.mainTaskRepeat) {
-      MainTask()
+      MainTask(0)
       i <- i + 1
    }
 }
 
-define MainTask()
+define AddButtons() 
+{
+   AddObject(gButton1,gWin)
+   Move(gButton1, gVideoWidth/2 - 160, 610)
+   AddObject(gButton2,gWin)
+   Move(gButton2, gVideoWidth/2 + 160, 610)
+}
+
+define MainTask(observation)
 {
    color <- Nth(gColors,RandomDiscrete(Length(gColors)))
    shape <- Nth(gShapes,RandomDiscrete(Length(gShapes)))
    sample <- MakeImage("png/"+shape+"_"+color+".png")
    AddObject(sample,gWin)
-   # Move(sample, gVideoWidth/2 - 450 +28 + 125/2, 105)
-   Move(sample, gVideoWidth/2, 105)
+   Move(sample, gVideoWidth/2, 140)
    Draw()
    Wait(2000)
    RemoveObject(sample,gWin)
@@ -54,20 +75,31 @@ define MainTask()
    AddObject(target2,gWin)
    Move(target2, gVideoWidth/2 + 160, 410)
    Draw()
-   response <- WaitForAnyKeyPressWithTimeOut(5000)
+   if (observation==1) {
+      Wait(1000)
+      if (lr==1) {
+          response <- "<left>"
+      } else {
+          response <- "<right>"
+      }
+   } else {
+      response <- WaitForAnyKeyPressWithTimeOut(5000)
+   }
    ButtonFlashes(response)
-   Print("Response:"+response)
    Wait(500)
    correct <- 0
    if ((response=="<left>" and lr==1) or (response=="<right>" and lr==2)) {
       correct <- 1
    }
-   Print("Correct:"+correct)
    if (correct==1) {
       AddObject(gCorrectFB,gWin)
       Draw()
       Wait(1000)
       RemoveObject(gCorrectFB,gWin)
+   }
+   if (observation==0) {
+      Print("Response:"+response)
+      Print("Correct:"+correct)
    }
 }
 
@@ -93,7 +125,7 @@ define ButtonFlashes(response)
       RemoveObject(gButton1F,gWin)
       AddObject(gButton1,gWin)
       Move(gButton1, gVideoWidth/2 - 160, 610)
-   } else {
+   } elseif (response=="<right>") {
       RemoveObject(gButton2,gWin)
       AddObject(gButton2F,gWin)
       Move(gButton2F, gVideoWidth/2 + 160, 610)
@@ -105,3 +137,20 @@ define ButtonFlashes(response)
    }
    Draw()
  }
+ 
+ define EndObservation()
+ {
+   RemoveObject(gObservBar,gWin)
+   AddObject(gBlackMask,gWin)
+   Draw()
+   Wait(400)
+   RemoveObject(gBlackMask,gWin)
+   AddObject(gWhiteMask,gWin)
+   Draw()
+   Wait(400)
+   RemoveObject(gWhiteMask,gWin)
+   AddObject(gBlackMask,gWin)
+   Draw()
+   Wait(400)
+   RemoveObject(gBlackMask,gWin)
+  }
