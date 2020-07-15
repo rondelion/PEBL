@@ -12,7 +12,7 @@ define Start(p)
 {
    paramPairs <- [["mainTaskRepeat",3],
                   ["observationRepeat",2]]
-   gParams <- CreateParameters(paramPairs,gParamFile)
+   gParams <- CreateParameters(paramPairs,"params/DM2S.par")
    gVideoWidth <- 800
    gVideoHeight <- 800
    gWin <- MakeWindow("white")
